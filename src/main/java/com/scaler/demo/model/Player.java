@@ -1,8 +1,11 @@
 package com.scaler.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -32,11 +35,13 @@ public class Player extends User {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Stat stats;
 
     @Getter
     @Setter
     @ManyToMany(mappedBy = "players")
+    @JsonIdentityReference
     private Set<Game> game = new HashSet<Game>();
 
     public Player(){}

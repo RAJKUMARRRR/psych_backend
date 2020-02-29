@@ -1,5 +1,7 @@
 package com.scaler.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +18,14 @@ public class PlayerAnswer extends Auditable{
     @Getter
     @Setter
     @ManyToOne
+    @JsonIdentityReference
     private Player player;
 
     @NotNull
     @Getter
     @Setter
     @ManyToOne
+    @JsonBackReference
     private Round round;
 
     @Getter

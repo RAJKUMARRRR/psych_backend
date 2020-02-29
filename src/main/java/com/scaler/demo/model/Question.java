@@ -1,5 +1,6 @@
 package com.scaler.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,13 +25,20 @@ public class Question extends Auditable{
 
     @Getter
     @Setter
-    @NotNull
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "question")
+    @JsonManagedReference
     private Set<EllenAnswer> ellenAnswers = new HashSet<>();
 
     @Getter
     @Setter
-    @NotNull
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
+
+    public Question(){}
+
+    public Question(@NotBlank String question, @NotBlank String correctAnswer, @NotNull GameMode gameMode) {
+        this.question = question;
+        this.correctAnswer = correctAnswer;
+        this.gameMode = gameMode;
+    }
 }

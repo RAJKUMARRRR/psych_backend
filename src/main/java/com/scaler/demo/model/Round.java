@@ -1,5 +1,8 @@
 package com.scaler.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,29 +19,34 @@ public class Round extends Auditable{
     @Getter
     @ManyToOne
     @NotNull
+    @JsonBackReference
     private Game game;
 
     @Getter
     @Setter
     @ManyToOne
     @NotNull
+    @JsonIdentityReference
     private Question question;
 
     @Getter
     @Setter
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Map<Player,PlayerAnswer> submittedAnswers = new HashMap<>();
 
     @Getter
     @Setter
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Map<Player,PlayerAnswer> selectedAnswers = new HashMap<>();
 
     @Getter
     @Setter
     @ManyToOne
+    @JsonIdentityReference
     private EllenAnswer ellenAnswer;
 
     @Getter
