@@ -2,6 +2,7 @@ package com.scaler.demo.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -21,11 +22,22 @@ public abstract class User extends Auditable{
 
     @NotBlank
     @Getter
-    @Setter
     private String saltedHashedPassword;
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roleSet = new HashSet<Role>();
+
+    public void setSaltedHashedPassword(String saltedHashedPassword) {
+        this.saltedHashedPassword = new BCryptPasswordEncoder(5).encode(saltedHashedPassword);
+    }
+
+    public User(){}
+
+    public User(User user){
+        email = user.getEmail();
+        saltedHashedPassword = user.getSaltedHashedPassword();
+        roleSet = user.getRoleSet();
+    }
 }
